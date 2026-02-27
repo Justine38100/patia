@@ -1,0 +1,2 @@
+Commande le graphes de ce répertoire :
+python3 n_puzzle/plot_generation/move_vs_time_combined/plot_moves_vs_time_combined.py --size 3 --min-shuffle 1 --max-shuffle 20 --step 1 --samples 5 --seed 42 --timeout 5 --logy --out moves_vs_time.png --show

@@ -1,0 +1,2 @@
+Commande le graphe généré de ce répertoire :
+python3 n_puzzle/plot_generation/size_vs_time_combined/plot_size_vs_time_combined.py --min-size 2 --max-size 10 --shuffle 10 --samples 10 --seed 42 --timeout 5 --logy --out size_vs_time.png --show

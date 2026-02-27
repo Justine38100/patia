@@ -1,0 +1,2 @@
+Commande des 3 graphes de ce répertoire :
+python3 n_puzzle/plot_generation/moves_vs_time_three/plot_moves_vs_time_three.py --size 4 --min-shuffle 1 --max-shuffle 30 --step 1 --samples 5 --seed 42 --timeout 5 --logy  --out-prefix moves --show

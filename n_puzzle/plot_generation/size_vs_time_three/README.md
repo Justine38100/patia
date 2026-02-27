@@ -1,0 +1,2 @@
+Commande des 3 graphes de ce répertoire :
+python3 n_puzzle/plot_generation/size_vs_time_three/plot_size_vs_time_three.py --min-size 2 --max-size 6 --shuffle 10 --samples 10 --seed 42 --timeout 5 --logy --out-prefix size_time --show

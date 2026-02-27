@@ -1,0 +1,9 @@
+n_puzzle/__pycache__/
+n_puzzle/benchmarks/
+puzzles/*
+YetAnotherSATPlanner/*
+pddl/blocks/*
+pddl/logistics/*
+pddl/rover/*
+pddl/pddl4j-4.0.0.jar
+pddl/pddl4j.sh
