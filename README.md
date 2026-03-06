@@ -1,4 +1,8 @@
-Commandes utiles
+********************************************************************
+                 Partie 1 : taquin - A*, BFS et DFS    
+********************************************************************
+Préconditions: 
+- être à la racine du projet
 
 1) Générer des puzzles
 ```bash
@@ -57,3 +61,62 @@ python3 n_puzzle/plot_generation/moves_vs_time_three/plot_moves_vs_time_three.py
   --size 3 --min-shuffle 1 --max-shuffle 20 --samples 5 --seed 42 \
   --timeout 5 --logy --out-prefix moves --show
 ```
+
+********************************************************************
+                 Partie 2 : hanoi - pddl  
+********************************************************************
+Préconditions: 
+- être àdans le répertoire pddl (sinon le solver est inconnu)
+
+Lancer le script de base :
+```bash
+./pddl/pddl4j.sh
+```
+Puis suivre les instructions.
+
+Exemple pour lancer la résolution de hanoi 3 par 3 :
+- Choisir l'option 1
+- Entrer le nom de domaine : hanoi/domain.pddl
+- Entrer le probleme : hanoi/problem3_3.pddl
+- Timeout [int]: 500
+- Choisir l'option 5 : 5
+
+Lancer le script automatisé :
+```bash
+./pddl/pddlj4_auto.sh <solver> <domain.pddl> <problem.pddl> <timeout_sec> <heuristic_id>
+```
+
+Exemple : 
+```bash
+./pddlj4_auto.sh 1 hanoi/domain.pddl hanoi/problem3_3.pddl 500 5
+```
+
+********************************************************************
+                 Partie 3 : taquin - pddl  
+********************************************************************
+Préconditions: 
+- être àdans le répertoire pddl (sinon le solver est inconnu)
+
+Lancer le script de base :
+```bash
+./pddl/pddl4j.sh
+```
+Puis suivre les instructions.
+
+Exemple pour lancer la résolution de hanoi 3 par 3 :
+- Choisir l'option 1
+- Entrer le nom de domaine : taquin/domain.pddl
+- Entrer le probleme : taquin/problem3_3/problem1.pddl
+- Timeout [int]: 500
+- Choisir l'option 5 : 5
+
+Lancer le script automatisé :
+```bash
+./pddl/pddlj4_auto.sh <solver> <domain.pddl> <problem.pddl> <timeout_sec> <heuristic_id>
+```
+
+Exemple : 
+```bash
+./pddlj4_auto.sh 1 taquin/domain.pddl taquin/problem3_3/problem1.pddl 500 5
+```
+
