@@ -66,11 +66,11 @@ python3 n_puzzle/plot_generation/moves_vs_time_three/plot_moves_vs_time_three.py
                  Partie 2 : hanoi - pddl  
 ********************************************************************
 Préconditions: 
-- être àdans le répertoire pddl (sinon le solver est inconnu)
+- être dans le répertoire pddl (sinon le solver est inconnu)
 
 Lancer le script de base :
 ```bash
-./pddl/pddl4j.sh
+./pddl4j.sh
 ```
 Puis suivre les instructions.
 
@@ -83,7 +83,7 @@ Exemple pour lancer la résolution de hanoi 3 par 3 :
 
 Lancer le script automatisé :
 ```bash
-./pddl/pddlj4_auto.sh <solver> <domain.pddl> <problem.pddl> <timeout_sec> <heuristic_id>
+./pddlj4_auto.sh <solver> <domain.pddl> <problem.pddl> <timeout_sec> <heuristic_id>
 ```
 
 Exemple : 
@@ -95,11 +95,11 @@ Exemple :
                  Partie 3 : taquin - pddl  
 ********************************************************************
 Préconditions: 
-- être àdans le répertoire pddl (sinon le solver est inconnu)
+- être dans le répertoire pddl (sinon le solver est inconnu)
 
 Lancer le script de base :
 ```bash
-./pddl/pddl4j.sh
+./pddl4j.sh
 ```
 Puis suivre les instructions.
 
@@ -112,7 +112,7 @@ Exemple pour lancer la résolution de hanoi 3 par 3 :
 
 Lancer le script automatisé :
 ```bash
-./pddl/pddlj4_auto.sh <solver> <domain.pddl> <problem.pddl> <timeout_sec> <heuristic_id>
+./pddlj4_auto.sh <solver> <domain.pddl> <problem.pddl> <timeout_sec> <heuristic_id>
 ```
 
 Exemple : 
@@ -120,3 +120,31 @@ Exemple :
 ./pddlj4_auto.sh 1 taquin/domain.pddl taquin/problem3_3/problem1.pddl 500 5
 ```
 
+********************************************************************
+                 Partie 3 : poursuite évasion - pddl  
+********************************************************************
+Préconditions: 
+- être dans le répertoire pddl (sinon le solver est inconnu)
+
+Lancer le script de base :
+```bash
+./pddl4j.sh
+```
+Puis suivre les instructions.
+
+Exemple pour lancer la résolution de hanoi 3 par 3 :
+- Choisir l'option 1
+- Entrer le nom de domaine : pursuit_evasion/domain.pddl
+- Entrer le probleme : pursuit_evasion/problem_exemple_site.pddl
+- Timeout [int]: 500
+- Choisir l'option 5 : 5
+
+Lancer le script automatisé :
+```bash
+./pddlj4_auto.sh <solver> <domain.pddl> <problem.pddl> <timeout_sec> <heuristic_id>
+```
+
+Exemple : 
+```bash
+./pddlj4_auto.sh 1 pursuit_evasion/domain.pddl pursuit_evasion/problem_exemple_site.pddl 500 5
+```
