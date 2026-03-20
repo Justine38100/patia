@@ -177,3 +177,33 @@ Exemple :
 ```bash
 ./pddlj4_auto.sh 1 sokoban/domain.pddl sokoban/problem_two_caisses_inverse.pddl 500 5
 ```
+
+********************************************************************
+                 Partie 6 : sokoban - java  
+********************************************************************
+Préconditions: 
+- être dans le répertoire sokoban-master
+Puis faire (pour installer pddl4j-4.0.0.jar):
+```bash
+  mvn -q install:install-file \
+  -Dfile=/home/justine/Documents/M1_INFO/S2/Patia/patia/pddl/pddl4j-4.0.0.jar \
+  -DgroupId=fr.uga -DartifactId=pddl4j -Dversion=4.0.0 \
+  -Dpackaging=jar -DgeneratePom=true
+
+```
+- faire ensuite (pour s'assurer que tout fonctionne):
+```bash
+mvn clean compile
+```
+
+Lancer le script automatisé :
+```bash
+./scripts/run_pddl_to_sokoban.sh <solver> <domain.pddl> <problem.pddl> <timeout_sec> <heuristic_id> <niveau.json associé au problem.pddl>
+```
+
+Exemple : 
+```bash
+./scripts/run_pddl_to_sokoban.sh 1 pddl/sokoban/domain.pddl pddl/sokoban/problem_two_caisses.pddl 500 5 problem_two_caisses.json```
+```
+
+Visualiser le résulat dans l'onglet : http://localhost:8888/test.html
