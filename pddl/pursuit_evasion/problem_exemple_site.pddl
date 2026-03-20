@@ -1,7 +1,4 @@
 ; problem.pddl
-; Exemple concret pour le domaine pursuit_evasion.
-
-; Debut de la definition du probleme.
 (define (problem pursuit_4_noeuds_pb_site_exemple)
 
   (:domain pursuit_evasion)
