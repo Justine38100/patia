@@ -103,7 +103,7 @@ Lancer le script de base :
 ```
 Puis suivre les instructions.
 
-Exemple pour lancer la résolution de hanoi 3 par 3 :
+Exemple pour lancer la résolution de taquin 3 par 3 :
 - Choisir l'option 1
 - Entrer le nom de domaine : taquin/domain.pddl
 - Entrer le probleme : taquin/problem3_3/problem1.pddl
@@ -121,7 +121,7 @@ Exemple :
 ```
 
 ********************************************************************
-                 Partie 3 : poursuite évasion - pddl  
+                 Partie 4 : poursuite évasion - pddl  
 ********************************************************************
 Préconditions: 
 - être dans le répertoire pddl (sinon le solver est inconnu)
@@ -132,7 +132,7 @@ Lancer le script de base :
 ```
 Puis suivre les instructions.
 
-Exemple pour lancer la résolution de hanoi 3 par 3 :
+Exemple pour lancer la résolution de poursuite evasion sur le même grapqhe que l'exemple vu sur le site :
 - Choisir l'option 1
 - Entrer le nom de domaine : pursuit_evasion/domain.pddl
 - Entrer le probleme : pursuit_evasion/problem_exemple_site.pddl
@@ -147,4 +147,33 @@ Lancer le script automatisé :
 Exemple : 
 ```bash
 ./pddlj4_auto.sh 1 pursuit_evasion/domain.pddl pursuit_evasion/problem_exemple_site.pddl 500 5
+```
+
+********************************************************************
+                 Partie 5 : sokoban - pddl  
+********************************************************************
+Préconditions: 
+- être dans le répertoire pddl (sinon le solver est inconnu)
+
+Lancer le script de base :
+```bash
+./pddl4j.sh
+```
+Puis suivre les instructions.
+
+Exemple pour lancer la résolution d'un niveau sokoban avec deux caisses :
+- Choisir l'option 1
+- Entrer le nom de domaine : sokoban/domain.pddl
+- Entrer le probleme : sokoban/problem_two_caisses_inverse.pddl
+- Timeout [int]: 500
+- Choisir l'option 5 : 5
+
+Lancer le script automatisé :
+```bash
+./pddlj4_auto.sh <solver> <domain.pddl> <problem.pddl> <timeout_sec> <heuristic_id>
+```
+
+Exemple : 
+```bash
+./pddlj4_auto.sh 1 sokoban/domain.pddl sokoban/problem_two_caisses_inverse.pddl 500 5
 ```
