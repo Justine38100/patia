@@ -183,7 +183,7 @@ Exemple :
 ********************************************************************
 Préconditions: 
 - être dans le répertoire sokoban-master
-Puis faire (pour installer pddl4j-4.0.0.jar):
+Puis faire (pour installer pddl4j-4.0.0.jar) :
 ```bash
   mvn -q install:install-file \
   -Dfile=/home/justine/Documents/M1_INFO/S2/Patia/patia/pddl/pddl4j-4.0.0.jar \
@@ -191,10 +191,27 @@ Puis faire (pour installer pddl4j-4.0.0.jar):
   -Dpackaging=jar -DgeneratePom=true
 
 ```
-- faire ensuite (pour s'assurer que tout fonctionne):
+- faire ensuite (pour s'assurer que tout fonctionne) :
 ```bash
 mvn clean compile
 ```
+
+- pour convertir les niveaux JSON <-> PDDL
+
+```bash
+# JSON -> PDDL
+./sokoban-master/scripts/convert_level.sh sokoban-master/config/test_pddl_custom.json
+
+# PDDL -> JSON
+./sokoban-master/scripts/convert_level.sh pddl/sokoban/pb_json/test_pddl_custom.pddl
+```
+
+Règles:
+- JSON output directory: `sokoban-master/config`
+- PDDL output directory: `pddl/sokoban/pb_json`
+- Même nom de base dans les deux formats (`toto.json` <-> `toto.pddl`)
+- Entrée .json -> sortie pddl/sokoban/pb_json/<meme_nom>.pddl
+- Entrée .pddl -> sortie sokoban-master/config/<meme_nom>.json
 
 Lancer le script automatisé :
 ```bash
@@ -203,7 +220,7 @@ Lancer le script automatisé :
 
 Exemple : 
 ```bash
-./scripts/run_pddl_to_sokoban.sh 1 pddl/sokoban/domain.pddl pddl/sokoban/problem_two_caisses.pddl 500 5 problem_two_caisses.json```
+./scripts/run_pddl_to_sokoban.sh 1 pddl/sokoban/domain.pddl pddl/sokoban/problem_two_caisses.pddl 500 5 problem_two_caisses.json
 ```
 
 Visualiser le résulat dans l'onglet : http://localhost:8888/test.html

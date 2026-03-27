@@ -1,8 +1,8 @@
 {
   "title": {
-    "2": "Custom PDDL Level"
+    "2": "test_pddl_custom"
   },
-  "testIn": "    ####\n ####. #\n #     #\n #  $ .#\n # # $ #\n #@    #\n #######",
+  "testIn": "#######\n####. #\n#     #\n#  $ .#\n# # $ #\n#@    #\n#######",
   "isTest": "true",
   "isValidator": "true"
 }
