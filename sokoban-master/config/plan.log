@@ -1,10 +1,70 @@
 WARNING: sun.reflect.Reflection.getCallerClass is not supported. This will impact performance.
 
 parsing domain file "domain.pddl" done successfully
-parsing problem file "test21.pddl" done successfully
+parsing problem file "test3.pddl" done successfully
 # WARNING: Unable to get Instrumentation. Dynamic Attach failed. You may add this JAR as -javaagent manually, or supply -Djdk.attach.allowAttachSelf
 # WARNING: Unable to attach Serviceability Agent. You can try again with escalated privileges. Two options: a) use -Djol.tryWithSudo=true to try with sudo; b) echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
 
-problem instantiation done successfully (282 actions, 279 fluents)
+problem instantiation done successfully (124 actions, 159 fluents)
 
 * Starting ASTAR search with FAST_FORWARD heuristic 
+* ASTAR search succeeded
+
+found plan as follows:
+
+00: (push-south b3 c46 c39 c32) [0]
+01: (push-south b3 c39 c32 c25) [0]
+02: (        move-west c32 c31) [0]
+03: (        move-west c31 c30) [0]
+04: (       move-south c30 c23) [0]
+05: (       move-south c23 c16) [0]
+06: ( push-east b1 c16 c17 c18) [0]
+07: ( push-east b1 c17 c18 c19) [0]
+08: (       move-south c18 c11) [0]
+09: (        move-east c11 c12) [0]
+10: (push-north b1 c12 c19 c26) [0]
+11: (push-north b1 c19 c26 c33) [0]
+12: (       move-south c26 c19) [0]
+13: (        move-west c19 c18) [0]
+14: (        move-west c18 c17) [0]
+15: (        move-west c17 c16) [0]
+16: (       move-north c16 c23) [0]
+17: (       move-north c23 c30) [0]
+18: (        move-east c30 c31) [0]
+19: (        move-east c31 c32) [0]
+20: (       move-north c32 c39) [0]
+21: (       move-north c39 c46) [0]
+22: (        move-west c46 c45) [0]
+23: (push-south b2 c45 c38 c31) [0]
+24: (        move-east c38 c39) [0]
+25: (       move-south c39 c32) [0]
+26: (push-south b3 c32 c25 c18) [0]
+27: (        move-east c25 c26) [0]
+28: (        move-east c26 c27) [0]
+29: (       move-north c27 c34) [0]
+30: ( push-west b1 c34 c33 c32) [0]
+31: (       move-south c33 c26) [0]
+32: (        move-west c26 c25) [0]
+33: (push-north b1 c25 c32 c39) [0]
+34: (       move-south c32 c25) [0]
+35: (        move-east c25 c26) [0]
+36: (       move-south c26 c19) [0]
+37: (       move-south c19 c12) [0]
+38: (        move-west c12 c11) [0]
+39: (push-north b3 c11 c18 c25) [0]
+40: (        move-west c18 c17) [0]
+41: (        move-west c17 c16) [0]
+42: (       move-north c16 c23) [0]
+43: (       move-north c23 c30) [0]
+44: ( push-east b2 c30 c31 c32) [0]
+
+time spent:       0,04 seconds parsing 
+                  0,16 seconds encoding 
+                  0,45 seconds searching
+                  0,65 seconds total time
+
+memory used:      0,76 MBytes for problem representation
+                  1,30 MBytes for searching
+                  2,06 MBytes total
+
+

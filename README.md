@@ -215,39 +215,11 @@ Lancer le script automatique :
 ./scripts/convert_and_run.sh 1 ../pddl/sokoban/pb_json/test21.pddl 500 5
 ```
 
-
-
-
-# Pour faire étape par étape
-- pour convertir les niveaux JSON <-> PDDL
-
-```bash
-# Lancer le script automatisé :
-./scripts/convert_level.sh <chemin depuis votre répertoire vers le fichier à convertir>
-
-#Exemple : 
-# JSON -> PDDL
-./scripts/convert_level.sh config/test_pddl_custom.json
-
-# PDDL -> JSON
-./scripts/convert_level.sh ../pddl/sokoban/pb_json/test_pddl_custom.pddl
-```
-
-Règles:
+(Info) Règles:
 - JSON output directory: `sokoban-master/config`
 - PDDL output directory: `pddl/sokoban/pb_json`
 - Même nom de base dans les deux formats (`toto.json` <-> `toto.pddl`)
 - Entrée .json -> sortie pddl/sokoban/pb_json/<meme_nom>.pddl
 - Entrée .pddl -> sortie sokoban-master/config/<meme_nom>.json
-
-Lancer le script automatisé :
-```bash
-./scripts/run_pddl_to_sokoban.sh <solver> <domain.pddl> <problem.pddl (chemin depuis votre répertoire vers le pddl)> <timeout_sec> <heuristic_id> <niveau.json associé au problem.pddl (juste le nom)>
-```
-
-Exemple : 
-```bash
-./scripts/run_pddl_to_sokoban.sh 1 pddl/sokoban/domain.pddl pddl/sokoban/pb_json/test_pddl_custom.pddl 500 5 test_pddl_custom.json
-```
 
 Visualiser le résulat dans l'onglet : http://localhost:8888/test.html
