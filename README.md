@@ -223,3 +223,4 @@ Lancer le script automatique :
 - Entrée .pddl -> sortie sokoban-master/config/<meme_nom>.json
 
 Visualiser le résulat dans l'onglet : http://localhost:8888/test.html
+http://<id_VM>:<port de la vm 4200>
