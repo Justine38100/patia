@@ -19,6 +19,9 @@
     ; Case libre (sans joueur, sans caisse).
     (clear ?c - cell)
 
+    ; Une caisse occupe cette case (independant de l'identite de la caisse).
+    (occupied-by-box ?c - cell)
+
     ; Relations de voisinage directionnelles.
     (north ?from - cell ?to - cell)
     (south ?from - cell ?to - cell)
@@ -115,6 +118,8 @@
       (clear ?player-from)
       (not (clear ?box-from))
       (not (clear ?box-to))
+      (not (occupied-by-box ?box-from))
+      (occupied-by-box ?box-to)
     )
   )
 
@@ -136,6 +141,8 @@
       (clear ?player-from)
       (not (clear ?box-from))
       (not (clear ?box-to))
+      (not (occupied-by-box ?box-from))
+      (occupied-by-box ?box-to)
     )
   )
 
@@ -157,6 +164,8 @@
       (clear ?player-from)
       (not (clear ?box-from))
       (not (clear ?box-to))
+      (not (occupied-by-box ?box-from))
+      (occupied-by-box ?box-to)
     )
   )
 
@@ -178,6 +187,8 @@
       (clear ?player-from)
       (not (clear ?box-from))
       (not (clear ?box-to))
+      (not (occupied-by-box ?box-from))
+      (occupied-by-box ?box-to)
     )
   )
 )

@@ -266,6 +266,9 @@ def json_to_pddl(json_path: str) -> str:
     for b, c in zip(boxes_names, box_cells):
         lines.append(f"    (at-box {b} {c})")
 
+    for c in box_cells:
+        lines.append(f"    (occupied-by-box {c})")
+
     for g in goal_cells:
         lines.append(f"    (goal {g})")
 
@@ -275,8 +278,8 @@ def json_to_pddl(json_path: str) -> str:
     lines.append("  )")
     lines.append("")
     lines.append("  (:goal (and")
-    for b, g in zip(boxes_names, goal_cells):
-        lines.append(f"    (at-box {b} {g})")
+    for g in goal_cells:
+        lines.append(f"    (occupied-by-box {g})")
     lines.append("  ))")
     lines.append(")")
 

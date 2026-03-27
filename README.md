@@ -196,14 +196,41 @@ Puis faire (pour installer pddl4j-4.0.0.jar) :
 mvn clean compile
 ```
 
+Lancer le script automatique :
+
+```bash
+# Depuis un niveau JSON
+./scripts/convert_and_run.sh <solver> <niveau json> <timeout_sec> <heuristic_id>
+
+# Depuis un problem PDDL
+./scripts/convert_and_run.sh <solver> <niveau pddl> <timeout_sec> <heuristic_id>
+```
+
+```bash
+#Exemple :
+# Depuis un niveau JSON
+./scripts/convert_and_run.sh 1 config/test21.json 500 5
+
+# Depuis un problem PDDL
+./scripts/convert_and_run.sh 1 ../pddl/sokoban/pb_json/test21.pddl 500 5
+```
+
+
+
+
+# Pour faire étape par étape
 - pour convertir les niveaux JSON <-> PDDL
 
 ```bash
+# Lancer le script automatisé :
+./scripts/convert_level.sh <chemin depuis votre répertoire vers le fichier à convertir>
+
+#Exemple : 
 # JSON -> PDDL
-./sokoban-master/scripts/convert_level.sh sokoban-master/config/test_pddl_custom.json
+./scripts/convert_level.sh config/test_pddl_custom.json
 
 # PDDL -> JSON
-./sokoban-master/scripts/convert_level.sh pddl/sokoban/pb_json/test_pddl_custom.pddl
+./scripts/convert_level.sh ../pddl/sokoban/pb_json/test_pddl_custom.pddl
 ```
 
 Règles:
@@ -215,12 +242,12 @@ Règles:
 
 Lancer le script automatisé :
 ```bash
-./scripts/run_pddl_to_sokoban.sh <solver> <domain.pddl> <problem.pddl> <timeout_sec> <heuristic_id> <niveau.json associé au problem.pddl>
+./scripts/run_pddl_to_sokoban.sh <solver> <domain.pddl> <problem.pddl (chemin depuis votre répertoire vers le pddl)> <timeout_sec> <heuristic_id> <niveau.json associé au problem.pddl (juste le nom)>
 ```
 
 Exemple : 
 ```bash
-./scripts/run_pddl_to_sokoban.sh 1 pddl/sokoban/domain.pddl pddl/sokoban/problem_two_caisses.pddl 500 5 problem_two_caisses.json
+./scripts/run_pddl_to_sokoban.sh 1 pddl/sokoban/domain.pddl pddl/sokoban/pb_json/test_pddl_custom.pddl 500 5 test_pddl_custom.json
 ```
 
 Visualiser le résulat dans l'onglet : http://localhost:8888/test.html
