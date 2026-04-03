@@ -74,7 +74,7 @@ public class YetAnotherSATPlanner extends AbstractStateSpacePlanner {
         int stepmax = MAXSTEPS;
         Plan plan = null;
 
-        // Compute a heuristic lower bound for plan steps
+        // Borne inferieure heuristique: nombre minimal d'actions estime pour atteindre le but.
         final FastForward ff = new FastForward(problem);
         final int hlb = ff.estimate(new State(problem.getInitialState()), problem.getGoal());
         if (hlb > MAXSTEPS) {
@@ -83,28 +83,65 @@ public class YetAnotherSATPlanner extends AbstractStateSpacePlanner {
             System.exit(0);
         } else {
 
-            // Intial number of steps of the SAT encoding
+            // Horizon initial de l'encodage SAT: on commence à la borne heuristique.
             int steps = hlb;
 
-            // Create the SAT encoding
+            // Construction de l'encodage SAT pour cet horizon.
             SATEncoding sat = new SATEncoding(problem, steps);
 
-            // Create the SAT solver
+            // Initialisation du solveur SAT4J.
             final ISolver solver = SolverFactory.newDefault();
             solver.setTimeout(TIMEOUT);
-            // Prepare the solver to accept MAXVAR variables. MANDATORY for MAXSAT solving
+            // SAT4J demande une borne supérieure sur le nombre de variables manipulables.
             solver.newVar(MAXVAR);
             solver.setExpectedNumberOfClauses(NBCLAUSES);
             IProblem ip = solver;
 
-            // Seach starts here!
+            // Boucle de recherche incrémentale sur l'horizon.
             boolean doSearch = true;
 
+            // On augmente l'horizon tant qu'aucun plan n'est trouvé et que la borne max n'est pas dépassée.
             while (doSearch && !(steps > stepmax)) {
-                
-                // TO BE DONE!
+                try {
+                    // 1) Ajout des clauses CNF de l'horizon courant (delta si mode incremental).
+                    for (List<Integer> c : sat.currentDimacs) {
+                        // Conversion List<Integer> -> int[] pour SAT4J.
+                        int[] arr = c.stream().mapToInt(Integer::intValue).toArray();
+                        // Injection de la clause dans le solveur.
+                        solver.addClause(new VecInt(arr));
+                    }
+
+                    // 2) Le but est imposé via assumptions (contraintes temporaires pour ce test SAT).
+                    int[] g = sat.currentGoal.stream().mapToInt(Integer::intValue).toArray();
+                    IVecInt assumptions = new VecInt(g);
+
+                    // 3) Test SAT sous ces assumptions.
+                    if (ip.isSatisfiable(assumptions)) {
+                        // SAT: on récupère le modèle puis on extrait le plan.
+                        List<Integer> model = Arrays.stream(ip.model()).boxed().collect(Collectors.toList());
+                        plan = sat.extractPlan(model, problem);
+                        doSearch = false;
+                    } else {
+                        // UNSAT: aucun plan à cet horizon, on tente horizon+1.
+                        steps++;
+                        if (steps <= stepmax) {
+                            sat.next(); // génère les clauses supplémentaires pour l'horizon suivant
+                        }
+                    }
+
+                } catch (ContradictionException e) {
+                    // Contradiction immédiate pour cet horizon: on essaie l'horizon suivant.
+                    steps++;
+                    if (steps <= stepmax) {
+                        sat.next();
+                    }
+                } catch (TimeoutException e) {
+                    // Timeout SAT4J: on arrête la recherche.
+                    doSearch = false;
+                }
             }
         }
+        // Retourne le plan trouvé, ou null si non trouvé (borne atteinte / timeout).
         return plan;
     }
     public static void main(final String[] args) {
