@@ -1,5 +1,9 @@
 from typing import List
-from npuzzle import State, Move
+
+try:
+    from .npuzzle import State, Move
+except ImportError:
+    from npuzzle import State, Move
 
 class Node():
     def __init__(self, state : State, move : Move, cost = 0, heuristic = 0, parent = None) -> None:

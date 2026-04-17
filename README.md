@@ -48,6 +48,7 @@ Chaque sous répertoire de `n_puzzle/plot_generation/` contient une image de gra
 Précondition: être à la racine du projet.
 
 ```bash
+mkdir -p puzzles
 python3 n_puzzle/generate_npuzzle.py -s 3 -ml 3 -n 1 puzzles -v
 ```
 
@@ -77,6 +78,12 @@ Paramètres:
 ### Générer des graphes
 Les scripts sont dans `n_puzzle/plot_generation/`.  
 Chaque script enregistre son PNG dans son propre dossier par défaut.
+
+Préconditions :
+```bash
+python3 -m pip install --user matplotlib
+```
+
 
 #### Puzzles triés par difficulté (1 graphe)
 ```bash

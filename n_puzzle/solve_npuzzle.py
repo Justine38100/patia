@@ -3,11 +3,43 @@ import math
 import time
 import heapq
 
-from node import Node
 from typing import List
 from collections import deque
 
-from npuzzle import (Solution, State, Move, UP, DOWN, LEFT, RIGHT, create_goal, get_children, is_goal, load_puzzle, to_string, is_solution)
+try:
+    from .node import Node
+    from .npuzzle import (
+        Solution,
+        State,
+        Move,
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
+        create_goal,
+        get_children,
+        is_goal,
+        load_puzzle,
+        to_string,
+        is_solution,
+    )
+except ImportError:
+    from node import Node
+    from npuzzle import (
+        Solution,
+        State,
+        Move,
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
+        create_goal,
+        get_children,
+        is_goal,
+        load_puzzle,
+        to_string,
+        is_solution,
+    )
 
 BFS = 'bfs'
 DFS = 'dfs'
