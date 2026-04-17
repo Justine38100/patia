@@ -197,7 +197,6 @@ mvn clean compile
 ```
 
 Lancer le script automatique :
-
 ```bash
 # Depuis un niveau JSON
 ./scripts/convert_and_run.sh <solver> <niveau json> <timeout_sec> <heuristic_id>
@@ -224,3 +223,19 @@ Lancer le script automatique :
 
 Visualiser le résulat dans l'onglet : http://localhost:8888/test.html
 http://<id_VM>:<port de la vm 4200>
+
+********************************************************************
+                 Partie 7 : Solver - java  
+********************************************************************
+Préconditions: 
+- être dans le répertoire YetAnotherSATPlanner
+
+Lancer le script automatique :
+```bash
+./yetanothersatplanner.sh <domaine.pddl> <problem.pddl>
+```
+
+```bash
+# Exemple :
+./yetanothersatplanner.sh ../YetAnotherSATPlanner/domain.pddl ../YetAnotherSATPlanner/p01.pddl
+```
