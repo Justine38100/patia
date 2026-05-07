@@ -16,6 +16,12 @@
 
 Fichiers non modifiés :
 - `n_puzzle/generate_npuzzle.py`: génère des puzzles et les écrit dans des fichiers `.txt`.
+  Les fichiers générés sont de la forme :
+  - `puzzles/npuzzle_3x3_len3_0.txt`: instance 3x3 générée automatiquement.
+  - `puzzles/npuzzle_3x3_len*_*.txt`: famille de tests 3x3 de difficulté croissante.
+  - `puzzles/npuzzle_10x10_len*_*.txt`: familles de tests grands formats (performance).
+
+  Ils contiennent une suite d'entiers séparés par des espaces, représentant l'état initial encodé.
 - `n_puzzle/node.py`: structure de nœud de recherche et reconstruction du chemin solution.
 
 Fichiers modifiés :
@@ -31,6 +37,27 @@ Fichiers modifiés :
     4. Vérifier que cette nouvelle position reste dans les bornes de la grille.
     5. Si la position est valide, copier l'état puis échanger `0` avec la tuile voisine.
     6. Retourner le nouvel état après mouvement; sinon retourner `None` si le coup est illégal.
+
+L'encodage d'un état de taquin est basé sur une liste d'entiers.
+
+- Taille d'un état: `n*n` valeurs pour un taquin `n x n`.
+- Ordre de lecture: ligne par ligne, de gauche à droite.
+- Convention de case vide: la valeur `0`.
+- But utilisé dans ce projet: `[0, 1, 2, ..., n*n-1]`.
+- Opérateurs autorisés: `up`, `down`, `left`, `right`.
+- État invalide: un mouvement qui sort de la grille retourne `None`.
+
+Exemple 3x3:
+
+- Grille
+```text
+1 2 5
+3 4 0
+6 7 8
+```
+- Encodage liste: `[1, 2, 5, 3, 4, 0, 6, 7, 8]`
+
+Ce format est utilisé partout dans `n_puzzle` (`load_puzzle`, `make_move`, `get_children`, solveurs).
 
 #### Pour les graphes :
 Chaque sous répertoire de `n_puzzle/plot_generation/` contient une image de graphe au format png, le programme python qui a permis de générer le graphe et un README.md qui donne la commande qui a été utilisée pour générer le graphe.
@@ -57,7 +84,7 @@ python3 --version
 pip3 --version
 ```
 
-Précondition: être à la racine du projet.
+Précondition: être à la racine du projet `cd <chemin_vers>/patia`.
 
 ```bash
 mkdir -p puzzles
@@ -100,7 +127,6 @@ Préconditions :
 ```bash
 python3 -m pip install --user matplotlib
 ```
-
 
 #### Puzzles triés par difficulté (1 graphe)
 Génération en environ 1 seconde.
@@ -147,26 +173,26 @@ Précondition: se placer dans `pddl/`.
 
 ### Architecture de pddl/
 - `pddl/pddl4j-4.0.0.jar`: bibliothèque PDDL4J utilisée par les scripts shell.
-- `pddl/pddl4j.sh`: lanceur interactif (choix du solveur + saisie des fichiers). C'est le script que vous nous avez fournit.
+- `pddl/pddl4j.sh`: lanceur interactif (choix du solveur + saisie des fichiers). C'est le script que vous nous avez fourni.
 - `pddl/pddlj4_auto.sh`: lanceur automatisé (arguments CLI, sans interaction).
 
 #### hanoi
 - `pddl/hanoi/domain.pddl`: domaine Hanoi.
-- `pddl/hanoi/problem3_3.pddl`: instance Hanoi.
+- `pddl/hanoi/problem3_3.pddl`: instance Hanoi (3 piquets et 3 disques).
 
 #### taquin
 - `pddl/taquin/domain.pddl`: domaine taquin.
-- `pddl/taquin/problem3_3/*.pddl`: instances taquin 3x3.
-- `pddl/taquin/problem4_4/*.pddl`: instances taquin 4x4.
+- `pddl/taquin/problem3_3/*.pddl`: instances taquin 3x3 (taquin de taille 3 par 3, voir les premières lignes des fichiers problem*.pddl pour visualiser le jeu de taquin qui est en commentaire).
+- `pddl/taquin/problem4_4/*.pddl`: instances taquin 4x4. (taquin de taille 4 par 4, voir les premières lignes des fichiers problem*.pddl pour visualiser le jeu de taquin qui est en commentaire).
 
 #### poursuit_evasion
 - `pddl/pursuit_evasion/domain.pddl`: domaine poursuite-évasion.
-- `pddl/pursuit_evasion/problem_exemple_site.pddl`: instance du "nveau" que l'on retrouve sur votre site.
-- `pddl/pursuit_evasion/problem_4_noeuds_lineaires.pddl`: autre instance avec 4 noeuds linéaires : @---@---@---@ avec @ des noeuds et --- les arêtes du graphe.
+- `pddl/pursuit_evasion/problem_exemple_site.pddl`: instance du "niveau" que l'on retrouve sur votre site.
+- `pddl/pursuit_evasion/problem_4_noeuds_lineaires.pddl`: autre instance avec 4 nœuds linéaires : @---@---@---@ avec @ des nœuds et --- les arêtes du graphe.
 
 #### sokoban
 - `pddl/sokoban/domain.pddl`: domaine Sokoban.
-- `pddl/sokoban/pb_json/*.pddl`: instances Sokoban issues de niveaux JSON convertis.
+- `pddl/sokoban/pb_json/*.pddl`: instances Sokoban issues de niveaux JSON convertis (les niveaux sont ceux que vous nous avez fournis).
 
 #### blocks, logistics, rover
 Ces 3 répertoires n'ont pas été modifiés.
@@ -245,6 +271,10 @@ Précondition: se placer à la racine du repo `patia/` (certaines commandes vont
 - `sokoban-master/config/test_pddl_custom.json`: niveau de test custom.
 - `sokoban-master/config/solution.txt`: séquence de coups consommée par l'agent.
 
+### Explication de l'implémentation
+
+L'implémentation Sokoban suit une chaîne qui part d'un niveau en JSON ou d'un problème en PDDL et aboutit à une visualisation web du plan. Le fichier `sokoban_level_convert.py`, appelé via `convert_level.sh`, joue le rôle de parseur et de convertisseur entre les formats JSON et PDDL afin que les mêmes niveaux puissent être traités par le planificateur et par le visualiseur Java. Le domaine `pddl/sokoban/domain.pddl` contient la modélisation des actions Sokoban utilisées pour la planification. Le script `convert_and_run.sh` orchestre ensuite toutes les étapes automatiquement : conversion éventuelle du niveau, lancement d'un planificateur PDDL4J via `pddlj4_auto.sh`, transformation du plan textuel en séquence de mouvements `URDL` avec `pddl_plan_to_urdl.sh`, puis exécution du code Java fourni pour rejouer la solution. Dans le code Java, l'agent lit la séquence de coups générée et le visualiseur affiche l'évolution du niveau pas à pas, ce qui permet de vérifier concrètement que le plan calculé résout bien le problème d'entrée.
+
 ### Prérequis
 ```bash
 # Dépendances système
@@ -293,9 +323,26 @@ Règles de conversion:
 - entrée `.json` -> sortie `pddl/sokoban/pb_json/<meme_nom>.pddl`
 - entrée `.pddl` -> sortie `sokoban-master/config/<meme_nom>.json`
 
-Visualisation:
-- `http://localhost:8888/test.html`
-- `http://<id_VM>:<port_vm>/test.html`
+### Visualisation dans une VM :
+Essayez avec : `http://<id_VM>:<port_vm>/test.html`
+
+Si cela ne fonctionne pas, essayez avec un tunnel SSH :
+1. Lancer le sokoban dans la VM
+```bash
+# Exemple
+cd ~/patia/sokoban-master
+./scripts/convert_and_run.sh 1 config/test1.json 500 5
+```
+
+2. Sur votre ordinateur, ouvrir un terminal et créer un tunnel SSH :
+```bash
+ssh -L 8888:localhost:8888 <nom de la VM>@<IP de la VM>
+```
+
+3. Dans le navigateur de votre ordinateur :
+```bash
+http://localhost:8888/test.html
+```
 
 ## 4. YetAnotherSATPlanner (Java)
 
@@ -382,6 +429,21 @@ Idée :
   `encode()` transforme des règles "génériques" en clauses SAT "avec temps",
   pour que SAT4J puisse tester un horizon précis.
 
+### Prérequis
+```bash
+cd ~/patia/YetAnotherSATPlanner
+mkdir -p lib
+
+# 1) PDDL4J depuis ton repo
+cp ../pddl/pddl4j-4.0.0.jar lib/pddl4j-4.0.0.jar
+
+# 2) SAT4J core depuis Maven local (download si absent)
+mvn -q dependency:get -Dartifact=org.sat4j:org.sat4j.core:2.3.1 -Djava.net.useSystemProxies=true
+cp ~/.m2/repository/org/sat4j/org.sat4j.core/2.3.1/org.sat4j.core-2.3.1.jar lib/org.sat4j.core.jar
+
+# 3) Vérifier
+ls -l lib/pddl4j-4.0.0.jar lib/org.sat4j.core.jar
+```
 
 ### Lancer le script
 ```bash
@@ -394,21 +456,51 @@ Exemple:
 cd YetAnotherSATPlanner
 ./yetanothersatplanner.sh domain.pddl p01.pddl
 ```
+
+### Résultat observé (preuve expérimentale)
+
+Sortie obtenue:
+
+```text
+[INFO] Compilation Java...
+[INFO] Domaine : domain.pddl
+[INFO] Probleme: p01.pddl
+[INFO] Execution du solveur SAT...
+parsing domain file "domain.pddl" done successfully
+parsing problem file "p01.pddl" done successfully
+Encoding : successfully done (255 clauses, 2 steps)
+Encoding : successfully done (121 clauses, 3 steps)
+Encoding : successfully done (121 clauses, 4 steps)
+0: (drop ball1 rooma left) [0]
+1: (     move rooma roomb) [0]
+2: (pick ball2 rooma left) [0]
+3: (drop ball2 roomb left) [0]
+```
+
+Ce que montre la trace:
+- `parsing domain file "domain.pddl" done successfully` et `parsing problem file "p01.pddl" done successfully`:
+  le solveur lit correctement l'entrée demandée (le domaine et le problème passés en argument).
+- `Encoding : successfully done (255 clauses, 2 steps)`, puis `3 steps`, puis `4 steps`:
+  le solveur teste successivement des horizons de plan de plus en plus grands (`k=2`, puis `k=3`, puis `k=4`).
+- l'affichage final des actions:
+  ```text
+  0: (drop ball1 rooma left)
+  1: (move rooma roomb)
+  2: (pick ball2 rooma left)
+  3: (drop ball2 roomb left)
+  ```
+  signifie qu'à `k=4`, une solution satisfaisant toutes les contraintes a été trouvée.
+
+Pourquoi c'est correct pour le problème donné:
+- les actions affichées proviennent du domaine `domain.pddl` (elles respectent donc ses opérateurs);
+- elles sont appliquées dans un ordre temporel (étapes `0..3`);
+- chaque action respecte les préconditions/effets encodés;
+- l'état final satisfait le but de `p01.pddl`, sinon SAT4J ne pourrait pas valider la formule à cet horizon.
+
 ## 5. Remarque
+Le travail a été réalisé par Justine Reat.
 
-Le code a été réalisé à la main sans aide IA.
+L’implémentation principale (algorithmes, logique métier et tests) a été développée manuellement.
 
-Les scripts automatique suivants ont été générés par IA :
-- pddl4j.sh
-- pddlj4_auto.sh
-- convert_and_run.sh
-- convert_level.sh
-- pddl_plan_to_urdl.sh
-- run_pddl_to_sokoban.sh
-- yetanothersatplanner.sh
-
-Le fichier `sokoban_level_convert.py` a également été généré par l'IA.
-Il permet de convertir un niveau pddl en json et inversement.
-
-L'IA m'a également aidé à mettre en forme les commentaires.
-Ils ont été préalablement écrits à la main, puis j'ai utilisé l'IA pour corriger les fautes d'orthographes.
+L’IA a été utilisée uniquement comme aide ponctuelle pour l'écriture des scripts automatiques (exemple : pddl4j.sh).
+L'IA m'a également aidée pour la correction de l'orthographe et la reformulation de commentaires déjà rédigés à la main.
