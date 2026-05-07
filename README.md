@@ -187,8 +187,8 @@ Précondition: se placer dans `pddl/`.
 
 #### poursuit_evasion
 - `pddl/pursuit_evasion/domain.pddl`: domaine poursuite-évasion.
-- `pddl/pursuit_evasion/problem_exemple_site.pddl`: instance du "niveau" que l'on retrouve sur votre site.
-- `pddl/pursuit_evasion/problem_4_noeuds_lineaires.pddl`: autre instance avec 4 nœuds linéaires : @---@---@---@ avec @ des nœuds et --- les arêtes du graphe.
+- `pddl/pursuit_evasion/problem_exemple_site.pddl`: instance du "niveau" que l'on retrouve sur votre site (2 poursuivants et 5 zones contaminées (voir les commentaires dans le fichier))
+- `pddl/pursuit_evasion/problem_4_noeuds_lineaires.pddl`: autre instance avec 4 nœuds linéaires : @---@---@---@ avec @ des nœuds et --- les arêtes du graphe (2 poursuivants et 2 zones contaminées).
 
 #### sokoban
 - `pddl/sokoban/domain.pddl`: domaine Sokoban.
