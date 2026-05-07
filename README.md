@@ -86,12 +86,14 @@ python3 -m pip install --user matplotlib
 
 
 #### Puzzles triés par difficulté (1 graphe)
+Génération en environ 1 seconde.
 ```bash
 python3 n_puzzle/plot_generation/sorted_puzzles_time/plot_sorted_puzzles_time.py \
   "puzzles/*.txt" --timeout 5 --logy --show
 ```
 
 #### Taille vs temps (1 graphe)
+Génération en environ 3 minutes.
 ```bash
 python3 n_puzzle/plot_generation/size_vs_time_combined/plot_size_vs_time_combined.py \
   --min-size 2 --max-size 5 --shuffle 10 --samples 10 --seed 42 \
@@ -99,6 +101,7 @@ python3 n_puzzle/plot_generation/size_vs_time_combined/plot_size_vs_time_combine
 ```
 
 #### Taille vs temps (3 graphes)
+Génération en environ 4 minutes.
 ```bash
 python3 n_puzzle/plot_generation/size_vs_time_three/plot_size_vs_time_three.py \
   --min-size 2 --max-size 6 --shuffle 10 --samples 10 --seed 42 \
@@ -106,6 +109,7 @@ python3 n_puzzle/plot_generation/size_vs_time_three/plot_size_vs_time_three.py \
 ```
 
 #### Coups vs temps (1 graphe)
+Génération en environ 2 minutes.
 ```bash
 python3 n_puzzle/plot_generation/moves_vs_time_combined/plot_moves_vs_time_combined.py \
   --size 3 --min-shuffle 1 --max-shuffle 20 --samples 5 --seed 42 \
@@ -113,6 +117,7 @@ python3 n_puzzle/plot_generation/moves_vs_time_combined/plot_moves_vs_time_combi
 ```
 
 #### Coups vs temps (3 graphes)
+Génération en environ 4 minutes.
 ```bash
 python3 n_puzzle/plot_generation/moves_vs_time_three/plot_moves_vs_time_three.py \
   --size 3 --min-shuffle 1 --max-shuffle 20 --samples 5 --seed 42 \
@@ -148,6 +153,16 @@ Précondition: se placer dans `pddl/`.
 
 #### blocks, logistics, rover
 Ces 3 répertoires n'ont pas été modifiés.
+
+### Prérequis
+```bash
+# Installer java :
+sudo apt update
+sudo apt install openjdk-21-jre-headless
+
+# Pour compiler : 
+sudo apt install openjdk-21-jdk
+```
 
 ### Script interactif
 ```bash
@@ -198,7 +213,7 @@ cd pddl
 #### Sokoban
 ```bash
 cd pddl
-./pddlj4_auto.sh 1 sokoban/domain.pddl sokoban/pb_json/test21.pddl 500 5
+./pddlj4_auto.sh 1 sokoban/domain.pddl sokoban/pb_json/test1.pddl 500 5
 ```
 
 ## 3. Sokoban Java (convert + run)
@@ -216,11 +231,18 @@ Précondition: se placer dans `sokoban-master/`.
 - `sokoban-master/config/test_pddl_custom.json`: niveau de test custom.
 - `sokoban-master/config/solution.txt`: séquence de coups consommée par l'agent.
 
+### Prérequis
+```bash
+# Installer Maven
+sudo apt install -y maven
+```
+
+
 ### Installation de `pddl4j-4.0.0.jar` dans Maven local
 ```bash
 cd sokoban-master
-mvn -q install:install-file \
-  -Dfile=/home/justine/Documents/M1_INFO/S2/Patia/patia/pddl/pddl4j-4.0.0.jar \
+mvn -N org.apache.maven.plugins:maven-install-plugin:3.1.2:install-file \
+  -Dfile="$(cd .. && pwd)/pddl/pddl4j-4.0.0.jar" \
   -DgroupId=fr.uga \
   -DartifactId=pddl4j \
   -Dversion=4.0.0 \
