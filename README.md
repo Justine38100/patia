@@ -17,7 +17,6 @@
 Fichiers non modifiés :
 - `n_puzzle/generate_npuzzle.py`: génère des puzzles et les écrit dans des fichiers `.txt`.
 - `n_puzzle/node.py`: structure de nœud de recherche et reconstruction du chemin solution.
-- `n_puzzle/node.py`: structure de nœud de recherche et reconstruction du chemin solution.
 
 Fichiers modifiés :
 - `n_puzzle/solve_npuzzle.py`: point d'entrée CLI des solveurs et implémentations BFS/DFS/A*/IDDFS.
@@ -45,6 +44,19 @@ Chaque sous répertoire de `n_puzzle/plot_generation/` contient une image de gra
 - `n_puzzle/plot_generation/*/*.png`: graphes déjà générés (sorties d'exécution).
 
 ### Générer des puzzles
+
+#### Prérequis
+```bash
+sudo apt update
+sudo apt install -y python3 python3-pip
+```
+
+Vérification rapide:
+```bash
+python3 --version
+pip3 --version
+```
+
 Précondition: être à la racine du projet.
 
 ```bash
@@ -133,7 +145,7 @@ python3 n_puzzle/plot_generation/moves_vs_time_three/plot_moves_vs_time_three.py
 
 Précondition: se placer dans `pddl/`.
 
-### Architecture de ppdl/
+### Architecture de pddl/
 - `pddl/pddl4j-4.0.0.jar`: bibliothèque PDDL4J utilisée par les scripts shell.
 - `pddl/pddl4j.sh`: lanceur interactif (choix du solveur + saisie des fichiers). C'est le script que vous nous avez fournit.
 - `pddl/pddlj4_auto.sh`: lanceur automatisé (arguments CLI, sans interaction).
@@ -161,12 +173,9 @@ Ces 3 répertoires n'ont pas été modifiés.
 
 ### Prérequis
 ```bash
-# Installer java :
+# Installer Java 21 :
 sudo apt update
-sudo apt install openjdk-21-jre-headless
-
-# Pour compiler : 
-sudo apt install openjdk-21-jdk
+sudo apt install -y openjdk-21-jdk
 ```
 
 ### Script interactif
@@ -223,7 +232,7 @@ cd pddl
 
 ## 3. Sokoban Java (convert + run)
 
-Précondition: se placer dans `sokoban-master/`.
+Précondition: se placer à la racine du repo `patia/` (certaines commandes vont ensuite dans `sokoban-master/`).
 
 ### Architecture
 
@@ -238,27 +247,26 @@ Précondition: se placer dans `sokoban-master/`.
 
 ### Prérequis
 ```bash
-# Installer Maven
-sudo apt install -y maven
-```
+# Dépendances système
+sudo apt update
+sudo apt install -y openjdk-21-jdk maven python3
 
+# Depuis la racine du repo patia/
+cd <chemin_vers>/patia
 
-### Installation de `pddl4j-4.0.0.jar` dans Maven local
-```bash
-cd sokoban-master
-mvn -N org.apache.maven.plugins:maven-install-plugin:3.1.2:install-file \
-  -Dfile="$(cd .. && pwd)/pddl/pddl4j-4.0.0.jar" \
+# Pour installer la dépendance à PDDL4J
+mvn install:install-file \
+  -Dfile=./pddl/pddl4j-4.0.0.jar \
   -DgroupId=fr.uga \
   -DartifactId=pddl4j \
   -Dversion=4.0.0 \
   -Dpackaging=jar \
-  -DgeneratePom=true
-```
+  -DgeneratePom=true \
+  -Djava.net.useSystemProxies=true
 
-### Vérification de build
-```bash
+# Compiler le projet Sokoban Java
 cd sokoban-master
-mvn clean compile
+mvn compile -Djava.net.useSystemProxies=true
 ```
 
 ### Lancer la chaîne automatique
@@ -272,10 +280,10 @@ Exemples:
 cd sokoban-master
 
 # Depuis un niveau JSON
-./scripts/convert_and_run.sh 1 config/test21.json 500 5
+./scripts/convert_and_run.sh 1 config/test1.json 500 5
 
 # Depuis un problème PDDL
-./scripts/convert_and_run.sh 1 ../pddl/sokoban/pb_json/test21.pddl 500 5
+./scripts/convert_and_run.sh 1 ../pddl/sokoban/pb_json/test1.pddl 500 5
 ```
 
 Règles de conversion:
@@ -392,14 +400,14 @@ Le code a été réalisé à la main sans aide IA.
 
 Les scripts automatique suivants ont été générés par IA :
 - pddl4j.sh
-- pddl4j_auto.sh
+- pddlj4_auto.sh
 - convert_and_run.sh
-- convert_level
+- convert_level.sh
 - pddl_plan_to_urdl.sh
 - run_pddl_to_sokoban.sh
 - yetanothersatplanner.sh
 
-Le fichier `..sokoban_level_converpy`a également été généré par l'IA.
+Le fichier `sokoban_level_convert.py` a également été généré par l'IA.
 Il permet de convertir un niveau pddl en json et inversement.
 
 L'IA m'a également aidé à mettre en forme les commentaires.

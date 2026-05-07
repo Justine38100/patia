@@ -132,6 +132,7 @@ bash "$CONVERTER_SCRIPT" "$PLAN_LOG" "$SOLUTION_FILE"
 echo "[3/5] Ensure Maven can resolve pddl4j..."
 cd "$SOKOBAN_DIR"
 mvn -q install:install-file \
+  -Djava.net.useSystemProxies=true \
   -Dfile="$PDDL4J_JAR" \
   -DgroupId=fr.uga \
   -DartifactId=pddl4j \
@@ -140,7 +141,7 @@ mvn -q install:install-file \
   -DgeneratePom=true
 
 echo "[4/5] Compile Java project..."
-mvn -q -DskipTests compile
+mvn -q -Djava.net.useSystemProxies=true -DskipTests compile
 
 echo "[5/5] Run visualizer..."
 echo "    testcase: $testcase"
@@ -150,5 +151,5 @@ java --add-opens java.base/java.lang=ALL-UNNAMED \
   -server -Xms2048m -Xmx2048m \
   -Dsolution.file="$SOLUTION_FILE" \
   -Dsokoban.testcase="$testcase" \
-  -cp "$(mvn dependency:build-classpath -Dmdep.outputFile=/dev/stdout -q):target/test-classes/:target/classes" \
+  -cp "$(mvn -Djava.net.useSystemProxies=true dependency:build-classpath -Dmdep.outputFile=/dev/stdout -q):target/test-classes/:target/classes" \
   sokoban.SokobanMain

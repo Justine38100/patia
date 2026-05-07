@@ -35,7 +35,7 @@ USAGE
 compile() {
   echo "[INFO] Compilation Java..."
   mkdir -p "$PROJECT_DIR/classes"
-  javac -d "$PROJECT_DIR/classes" -cp "$JARS_CP" "$PROJECT_DIR"/src/fr/uga/pddl4j/yasp/*.java
+  javac -J-Djava.net.useSystemProxies=true -d "$PROJECT_DIR/classes" -cp "$JARS_CP" "$PROJECT_DIR"/src/fr/uga/pddl4j/yasp/*.java
 }
 
 resolve_file() {
