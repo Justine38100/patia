@@ -2,13 +2,13 @@
 # PATIA - Guide d'utilisation
 
 ## Table des matières
-- [1. Taquin Python (A*, BFS, DFS)](#1-taquin-python-a-bfs-dfs)
+- [1. Taquin Python (A*, BFS, DFS, IDDFS)](#1-taquin-python-a-bfs-dfs-iddfs)
 - [2. PDDL (Hanoi, Taquin, Poursuite-Évasion, Sokoban)](#2-pddl-hanoi-taquin-poursuite-évasion-sokoban)
 - [3. Sokoban Java (convert + run)](#3-sokoban-java-convert--run)
 - [4. YetAnotherSATPlanner (Java)](#4-yetanothersatplanner-java)
 - [5. Remarque](#5-remarque)
 
-## 1. Taquin Python (A*, BFS, DFS)
+## 1. Taquin Python (A*, BFS, DFS, IDDFS)
 
 ### Architecture de n_puzzle/
 
@@ -20,8 +20,8 @@ Fichiers non modifiés :
 - `n_puzzle/node.py`: structure de nœud de recherche et reconstruction du chemin solution.
 
 Fichiers modifiés :
-- `n_puzzle/solve_npuzzle.py`: point d'entrée CLI des solveurs et implémentations BFS/DFS/A*.
-  Implémentation des fonctions : solve_bfs(), solve_dfs(), solve_astar(), heuristic()
+- `n_puzzle/solve_npuzzle.py`: point d'entrée CLI des solveurs et implémentations BFS/DFS/A*/IDDFS.
+  Implémentation des fonctions : solve_bfs(), solve_dfs(), solve_astar(), heuristic(), depth_limited_search(), solve_iddfs()
 
 - `n_puzzle/npuzzle.py`: fonctions de base (état but, mouvements, enfants, lecture/écriture, vérification de solution).
   Implémentation de la fonction : `make_move()`.
@@ -74,6 +74,11 @@ Paramètres:
   Valeurs possibles: `bfs`, `dfs`, `astar`, `iddfs`.
 - `-v`: mode verbeux (affiche l'état initial du puzzle).
 - `-d <max_depth>`: profondeur maximale pour `iddfs` (optionnel, par défaut `100`).
+
+Comportement IDDFS :
+- `depth_limited_search()` explore en profondeur avec une borne de profondeur et évite les cycles sur la branche courante.
+- `solve_iddfs()` relance cette recherche pour des bornes successives de `0` à `max_depth`.
+- IDDFS retourne la première solution trouvée à profondeur minimale (comme BFS en profondeur, avec une mémoire proche de DFS).
 
 ### Générer des graphes
 Les scripts sont dans `n_puzzle/plot_generation/`.  

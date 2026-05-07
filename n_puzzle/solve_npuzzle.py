@@ -207,15 +207,71 @@ def heuristic(current_state : State, goal_state : State) -> int:
 
 def depth_limited_search(node: Node, limit: int, goal_state: State, moves: List[Move], dimension: int) -> Solution | None:
     '''Perform a depth-limited search'''
-    
-    # Todo: implement depth-limited search
-    pass
+
+    # On utilise une fonction récursive pour faire le DFS avec une limite de profondeur.
+    def _dls_recursive(current_node: Node, remaining_depth: int, path_states: set[tuple[int, ...]]) -> Solution | None:
+
+        # Si on a atteint l'état objectif, on reconstruit la solution
+        if is_goal(current_node.state, goal_state):
+            return current_node.get_path()
+
+        # Si on a atteint la limite de profondeur, on arrête d'explorer ce chemin.
+        if remaining_depth == 0:
+            return None
+
+        # On explore les enfants du noeud courant
+        for child_state, move in get_children(current_node.state, moves, dimension):
+
+            # On utilise un tuple de l'état enfant comme clé pour le set des états du chemin actuel, afin d'éviter les cycles.
+            child_key: tuple[int, ...] = tuple(child_state)
+
+            # Éviter les cycles à l'intérieur de la branche DFS actuelle.
+            if child_key in path_states:
+                continue
+
+            # Si l'état enfant n'est pas dans le chemin actuel, on continue à explorer ce chemin.
+            child_node = Node(state=child_state, move=move, parent=current_node)
+            path_states.add(child_key)
+
+            # On appelle récursivement la fonction pour explorer le chemin à partir de l'enfant.
+            solution = _dls_recursive(child_node, remaining_depth - 1, path_states)
+
+            # Si la solution est trouvée dans cette branche, on la retourne.
+            if solution is not None:
+                return solution
+
+            # Après avoir exploré le chemin à partir de l'enfant, on retire l'état enfant du set des états du chemin actuel pour permettre d'explorer d'autres branches.
+            path_states.remove(child_key)
+
+        return None
+
+    # On commence la recherche à partir du noeud racine, avec la limite de profondeur donnée, et un set qui contient l'état de la racine pour éviter les cycles.
+    root_key: tuple[int, ...] = tuple(node.state)
+    return _dls_recursive(node, limit, {root_key})
 
 def solve_iddfs(root: Node, max_depth: int) -> Solution:
     '''Solve the puzzle using the Iterative Deepening Depth-First Search algorithm'''
-    
-    # Todo: implement IDDFS algorithm
-    pass
+
+    # Si la profondeur maximale est négative, cela signifie que nous ne voulons pas explorer du tout, donc nous retournons une solution vide.
+    if max_depth < 0:
+        return []
+
+    # On calcule la dimension du puzzle (si on a 9 case alors la dimension est 3)
+    dimension: int = int(math.sqrt(len(root.state)))
+
+    # On crée l'état objectif => [1, 2, 3, ..., 0]
+    goal_state: State = create_goal(dimension)
+
+    # On définit les mouvements possibles
+    moves: List[Move] = [UP, DOWN, LEFT, RIGHT]
+
+    # On itère sur les limites de profondeur de 0 à max_depth, en appelant la fonction de recherche limitée en profondeur pour chaque limite.
+    for depth_limit in range(max_depth + 1):
+        solution = depth_limited_search(root, depth_limit, goal_state, moves, dimension)
+        if solution is not None:
+            return solution
+
+    return []
 
 def main():
     parser = argparse.ArgumentParser(description='Load an n-puzzle and solve it.')
